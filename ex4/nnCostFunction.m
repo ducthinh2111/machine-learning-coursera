@@ -88,14 +88,17 @@ J = -J/m + p;
 
 
 delta_3 = h - y_map;
-Theta2 = Theta2';
-delta_2 = Theta2(2:end, :) * delta_3 .* sigmoidGradient(z_2);
+Theta2_tr = Theta2';
+delta_2 = Theta2_tr(2:end, :) * delta_3 .* sigmoidGradient(z_2);
 
 DELTA_1 = delta_2*a_1;
 DELTA_2 = delta_3*a_2_t';
 
-Theta1_grad = DELTA_1/m;
-Theta2_grad = DELTA_2/m;
+p1 = (lambda/m)*[zeros(size(Theta1, 1), 1) Theta1(:, 2:end)];
+p2 = (lambda/m)*[zeros(size(Theta2, 1), 1) Theta2(:, 2:end)];
+
+Theta1_grad = DELTA_1/m + p1;
+Theta2_grad = DELTA_2/m + p2;
 
 % -------------------------------------------------------------
 
